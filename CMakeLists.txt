@@ -117,7 +117,7 @@ if(UNIX OR MINGW OR CYGWIN)
 endif()
 
 if(WIN32 AND MINGW)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread")
 endif()
 
 if(MSVC)
