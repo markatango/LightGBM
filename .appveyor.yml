@@ -8,14 +8,12 @@ configuration:  # a trick to construct a build matrix with multiple Python versi
 environment:
   matrix:
     - COMPILER: MSVC
-    - COMPILER: MINGW
 
 clone_depth: 50
 
 install:
   - git submodule update --init --recursive  # get `compute` folder
   - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%  # delete sh.exe from PATH (mingw32-make fix)
-  - set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw64\bin;%PATH%
   - set PYTHON_VERSION=%CONFIGURATION%
   - ps: >-
       switch ($env:PYTHON_VERSION) {
@@ -27,6 +25,7 @@ install:
           default {$env:MINICONDA = """C:\Miniconda37-x64"""}
       }
   - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
+  - set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw64\bin;%PATH%
   - set SKLEARN_SITE_JOBLIB=true  # temp fix for joblib warning in examples
   - ps: $env:LGB_VER = (Get-Content VERSION.txt).trim()
   - conda config --set always_yes yes --set changeps1 no
